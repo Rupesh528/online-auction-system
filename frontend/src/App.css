@@ -1,29 +1,94 @@
 /* App layout helpers */
 .app-container {
-  min-height: calc(100vh - 56px); /* header/navbar height (bootstrap default) */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
+	min-height: calc(100vh - 56px); /* header/navbar height (bootstrap default) */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem 1rem;
 }
 
 .content-card {
-  width: 100%;
-  max-width: 900px;
-  background: rgba(255,255,255,0.02);
-  border-radius: 10px;
-  padding: 2rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+	width: 100%;
+	max-width: 900px;
+	background: rgba(255, 255, 255, 0.02);
+	border-radius: 10px;
+	padding: 2rem;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
 }
 
 /* Make navbar sticky and elevate */
 .app-navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1020;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+	position: sticky;
+	top: 0;
+	z-index: 1020;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* Date Picker Styles */
+.react-datepicker-wrapper {
+	display: block;
+	width: 100%;
+}
+
+.react-datepicker {
+	font-family: inherit;
+	border-radius: 8px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.react-datepicker__header {
+	background-color: #f8f9fa;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.react-datepicker__time-container {
+	border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.react-datepicker__time-container .react-datepicker__time {
+	background-color: white;
+}
+
+.react-datepicker__time-container .react-datepicker__time-box {
+	width: 100px;
+}
+
+.react-datepicker__navigation {
+	top: 12px;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__time-list-item--selected {
+	background-color: var(--bs-primary) !important;
+	color: white !important;
+}
+
+.react-datepicker__time-container
+	.react-datepicker__time
+	.react-datepicker__time-box
+	ul.react-datepicker__time-list
+	li.react-datepicker__time-list-item--selected {
+	background-color: var(--bs-primary) !important;
 }
 
 @media (max-width: 576px) {
-  .content-card { padding: 1rem; }
+	.content-card {
+		padding: 1rem;
+	}
+
+	.react-datepicker {
+		font-size: 0.9em;
+	}
+
+	.react-datepicker__time-container {
+		width: 90px;
+	}
+
+	.react-datepicker__time-container .react-datepicker__time-box {
+		width: 90px;
+	}
 }

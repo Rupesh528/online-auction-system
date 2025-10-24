@@ -17,7 +17,10 @@ function Login() {
 				password,
 			});
 			localStorage.setItem("token", res.data.token);
-			auth?.setUser({ token: res.data.token });
+			auth?.setUser({ 
+				token: res.data.token,
+				id: res.data.user._id
+			});
 			alert("Login successful!");
 			navigate("/");
 		} catch {
