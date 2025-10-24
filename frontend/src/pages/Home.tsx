@@ -12,6 +12,10 @@ interface Auction {
 	currentBid: number;
 	imageUrl?: string;
 	endTime: string;
+	createdBy: {
+		_id: string;
+		name: string;
+	};
 }
 
 function Home() {
@@ -38,17 +42,34 @@ function Home() {
 		<main className="app-container">
 			<div className="content-card">
 				<div className="text-center mb-5">
-					<h1>Welcome to the Online Auction System</h1>
+					<h1>
+						{auth?.user ? (
+							<>Welcome back, {auth.user.name}! 👋</>
+						) : (
+							"Welcome to the Online Auction System"
+						)}
+					</h1>
 					<p className="lead">
-						Discover unique items and place your bids in real-time.
+						{auth?.user
+							? "Check out the latest auctions or create your own!"
+							: "Discover unique items and place your bids in real-time."}
 					</p>
-					{!auth?.user && (
+					{!auth?.user ? (
 						<div className="mt-4">
 							<Link to="/register" className="btn btn-primary mx-2">
 								Get Started
 							</Link>
 							<Link to="/login" className="btn btn-outline-primary mx-2">
 								Login
+							</Link>
+						</div>
+					) : (
+						<div className="mt-4">
+							<Link to="/create-auction" className="btn btn-primary mx-2">
+								Create an Auction
+							</Link>
+							<Link to="/auctions" className="btn btn-outline-primary mx-2">
+								Browse Auctions
 							</Link>
 						</div>
 					)}

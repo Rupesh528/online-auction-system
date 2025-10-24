@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 interface User {
 	token: string;
 	id: string;
+	name: string;
+	email: string;
 }
 
 interface AuthContextType {
@@ -21,13 +23,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
-		if (token) {
-			setUser({ token });
+		const userData = localStorage.getItem("userData");
+		if (token && userData) {
+			const parsedUserData = JSON.parse(userData);
+			setUser({
+				token,
+				id: parsedUserData.id,
+				name: parsedUserData.name,
+				email: parsedUserData.email,
+			});
 		}
 	}, []);
 
 	const logout = () => {
 		localStorage.removeItem("token");
+		localStorage.removeItem("userData");
 		setUser(null);
 	};
 

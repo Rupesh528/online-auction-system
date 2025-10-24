@@ -42,23 +42,34 @@ function Navbar() {
 					</ul>
 					<ul className="navbar-nav">
 						{auth?.user ? (
-							<li className="nav-item">
-								<button
-									className="btn btn-outline-danger"
-									onClick={handleLogout}
-								>
-									Logout
-								</button>
-							</li>
+							<>
+								<li className="nav-item me-3">
+									<Link className="nav-link" to="/dashboard">
+										<i className="bi bi-person-circle me-1"></i>
+										My Dashboard
+									</Link>
+								</li>
+								<li className="nav-item">
+									<button
+										className="btn btn-outline-light"
+										onClick={handleLogout}
+									>
+										<i className="bi bi-box-arrow-right me-1"></i>
+										Logout
+									</button>
+								</li>
+							</>
 						) : (
 							<>
 								<li className="nav-item">
 									<Link className="nav-link" to="/login">
+										<i className="bi bi-box-arrow-in-right me-1"></i>
 										Login
 									</Link>
 								</li>
 								<li className="nav-item">
 									<Link className="nav-link" to="/register">
+										<i className="bi bi-person-plus me-1"></i>
 										Register
 									</Link>
 								</li>
