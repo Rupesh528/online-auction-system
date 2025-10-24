@@ -1,34 +1,42 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
 
-function Login() {
+function Register() {
+	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
-	const auth = useContext(AuthContext);
 
-	const handleLogin = async (e: React.FormEvent) => {
+	const handleRegister = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const res = await axios.post("http://localhost:5000/api/auth/login", {
+			await axios.post("http://localhost:5000/api/auth/register", {
+				name,
 				email,
 				password,
 			});
-			localStorage.setItem("token", res.data.token);
-			auth?.setUser({ token: res.data.token });
-			alert("Login successful!");
-			navigate("/");
-		} catch {
-			alert("Invalid email or password.");
+			alert("Registration successful! Please login.");
+			navigate("/login");
+		} catch (err) {
+			alert("Error registering user.");
 		}
 	};
 
 	return (
 		<div className="container mt-5" style={{ maxWidth: 400 }}>
-			<h3 className="text-center mb-4">Login</h3>
-			<form onSubmit={handleLogin}>
+			<h3 className="text-center mb-4">Register</h3>
+			<form onSubmit={handleRegister}>
+				<div className="mb-3">
+					<input
+						type="text"
+						placeholder="Name"
+						className="form-control"
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						required
+					/>
+				</div>
 				<div className="mb-3">
 					<input
 						type="email"
@@ -49,12 +57,12 @@ function Login() {
 						required
 					/>
 				</div>
-				<button className="btn btn-success w-100" type="submit">
-					Login
+				<button className="btn btn-primary w-100" type="submit">
+					Register
 				</button>
 			</form>
 		</div>
 	);
 }
 
-export default Login;
+export default Register;
