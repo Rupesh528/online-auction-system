@@ -122,8 +122,11 @@ export const createAuction = async (req: AuthRequest, res: Response) => {
 
 export const getAuctions = async (_req: Request, res: Response) => {
 	try {
+		// populate createdBy and lastBidBy so frontend can determine winners
 		const auctions = await AuctionItem.find()
 			.populate("createdBy", "name email")
+			.populate("lastBidBy", "name email")
+			.populate("bids.user", "name email")
 			.sort({ createdAt: -1 });
 		res.json(auctions);
 	} catch (err) {
@@ -136,10 +139,10 @@ export const getAuctions = async (_req: Request, res: Response) => {
 
 export const getAuctionById = async (req: Request, res: Response) => {
 	try {
-		const auction = await AuctionItem.findById(req.params.id).populate(
-			"createdBy",
-			"name email"
-		);
+		const auction = await AuctionItem.findById(req.params.id)
+			.populate("createdBy", "name email")
+			.populate("lastBidBy", "name email")
+			.populate("bids.user", "name email");
 		if (!auction) {
 			return res.status(404).json({ message: "Auction not found" });
 		}
@@ -164,6 +167,7 @@ export const placeBid = async (req: AuthRequest, res: Response) => {
 			return res.status(400).json({ message: "Invalid bid amount" });
 		}
 
+		// Load auction to validate existence/owner/end time before attempting atomic update
 		const auction = await AuctionItem.findById(req.params.id);
 		if (!auction) {
 			return res.status(404).json({ message: "Auction not found" });
@@ -180,20 +184,29 @@ export const placeBid = async (req: AuthRequest, res: Response) => {
 			return res.status(400).json({ message: "Auction has ended" });
 		}
 
-		if (amount <= auction.currentBid) {
-			return res.status(400).json({
-				message: "Bid must be higher than current bid",
-				currentBid: auction.currentBid,
+		// Atomic update: only set new currentBid if the provided amount is greater than currentBid
+		const updated = await AuctionItem.findOneAndUpdate(
+			{ _id: req.params.id, currentBid: { $lt: amount } },
+			{
+				$set: { currentBid: amount, lastBidBy: req.user.id },
+				$push: { bids: { user: req.user.id, amount } },
+			},
+			{ new: true }
+		)
+			.populate("createdBy", "name email")
+			.populate("lastBidBy", "name email")
+			.populate("bids.user", "name email");
+
+		if (!updated) {
+			// If updated is null, someone else likely beat this bid (or the amount wasn't higher)
+			const fresh = await AuctionItem.findById(req.params.id);
+			return res.status(409).json({
+				message: "Bid not accepted. Current highest bid has changed.",
+				currentBid: fresh?.currentBid,
 			});
 		}
 
-		auction.currentBid = amount;
-		await auction.save();
-
-		res.json({
-			message: "Bid placed successfully",
-			auction,
-		});
+		res.json({ message: "Bid placed successfully", auction: updated });
 	} catch (err) {
 		const error = err as Error;
 		res.status(500).json({ message: error.message || "Failed to place bid" });

@@ -13,6 +13,15 @@ const auctionItemSchema = new mongoose.Schema(
 			ref: "User",
 			required: true,
 		},
+		// Track bids and the last bidder so we can determine a winner when auction ends
+		bids: [
+			{
+				user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+				amount: { type: Number },
+				createdAt: { type: Date, default: Date.now },
+			},
+		],
+		lastBidBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 	},
 	{ timestamps: true }
 );

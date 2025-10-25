@@ -16,6 +16,16 @@ interface Auction {
 		name: string;
 		email: string;
 	};
+	lastBidBy?: {
+		_id: string;
+		name: string;
+		email?: string;
+	};
+	bids?: Array<{
+		user?: { _id: string; name: string; email?: string } | string;
+		amount: number;
+		createdAt?: string;
+	}>;
 }
 
 interface EditableFields {
@@ -137,6 +147,42 @@ function AuctionDetails() {
 							/>
 						)}
 					</div>
+					{auction.bids && auction.bids.length > 0 && (
+						<div className="card mb-3">
+							<div className="card-body">
+								<h5 className="card-title">Bid History</h5>
+								<ul className="list-group list-group-flush">
+									{[...auction.bids]
+										.slice()
+										.reverse()
+										.map((b, idx) => (
+											<li
+												key={idx}
+												className="list-group-item d-flex justify-content-between align-items-center"
+											>
+												<div>
+													<strong>
+														{typeof b.user === "object"
+															? b.user.name
+															: "Unknown"}
+													</strong>
+													<div className="text-muted small">
+														{b.createdAt
+															? new Date(b.createdAt).toLocaleString()
+															: ""}
+													</div>
+												</div>
+												<div>
+													<span className="fw-bold">
+														${b.amount.toFixed(2)}
+													</span>
+												</div>
+											</li>
+										))}
+								</ul>
+							</div>
+						</div>
+					)}
 					<div className="col-md-6">
 						{isEditing ? (
 							<form onSubmit={handleUpdate}>
@@ -146,10 +192,12 @@ function AuctionDetails() {
 										type="text"
 										className="form-control"
 										value={editedFields.title}
-										onChange={(e) => setEditedFields(prev => ({
-											...prev,
-											title: e.target.value
-										}))}
+										onChange={(e) =>
+											setEditedFields((prev) => ({
+												...prev,
+												title: e.target.value,
+											}))
+										}
 										required
 									/>
 								</div>
@@ -158,10 +206,12 @@ function AuctionDetails() {
 									<textarea
 										className="form-control"
 										value={editedFields.description}
-										onChange={(e) => setEditedFields(prev => ({
-											...prev,
-											description: e.target.value
-										}))}
+										onChange={(e) =>
+											setEditedFields((prev) => ({
+												...prev,
+												description: e.target.value,
+											}))
+										}
 										rows={3}
 										required
 									/>
@@ -172,10 +222,12 @@ function AuctionDetails() {
 										type="url"
 										className="form-control"
 										value={editedFields.imageUrl}
-										onChange={(e) => setEditedFields(prev => ({
-											...prev,
-											imageUrl: e.target.value
-										}))}
+										onChange={(e) =>
+											setEditedFields((prev) => ({
+												...prev,
+												imageUrl: e.target.value,
+											}))
+										}
 									/>
 								</div>
 								<div className="mb-3">
@@ -183,18 +235,30 @@ function AuctionDetails() {
 									<input
 										type="datetime-local"
 										className="form-control"
-										value={new Date(editedFields.endTime).toISOString().slice(0, 16)}
-										onChange={(e) => setEditedFields(prev => ({
-											...prev,
-											endTime: e.target.value
-										}))}
+										value={new Date(editedFields.endTime)
+											.toISOString()
+											.slice(0, 16)}
+										onChange={(e) =>
+											setEditedFields((prev) => ({
+												...prev,
+												endTime: e.target.value,
+											}))
+										}
 										min={new Date().toISOString().slice(0, 16)}
 										required
 									/>
 								</div>
 								<div className="mb-3">
-									<button type="submit" className="btn btn-primary me-2">Save Changes</button>
-									<button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>Cancel</button>
+									<button type="submit" className="btn btn-primary me-2">
+										Save Changes
+									</button>
+									<button
+										type="button"
+										className="btn btn-secondary"
+										onClick={() => setIsEditing(false)}
+									>
+										Cancel
+									</button>
 								</div>
 							</form>
 						) : (
@@ -202,22 +266,29 @@ function AuctionDetails() {
 								<div className="d-flex justify-content-between align-items-start">
 									<div>
 										<h2>{auction.title}</h2>
-										<p className="text-muted">Listed by: {auction.createdBy.name}</p>
+										<p className="text-muted">
+											Listed by: {auction.createdBy.name}
+										</p>
 									</div>
-									{auth?.user && auth.user.id === auction.createdBy._id && !isEnded && auction.currentBid === auction.startingPrice && (
-										<button 
-											className="btn btn-outline-primary btn-sm"
-											onClick={() => setIsEditing(true)}
-										>
-											Edit Auction
-										</button>
-									)}
+									{auth?.user &&
+										auth.user.id === auction.createdBy._id &&
+										!isEnded &&
+										auction.currentBid === auction.startingPrice && (
+											<button
+												className="btn btn-outline-primary btn-sm"
+												onClick={() => setIsEditing(true)}
+											>
+												Edit Auction
+											</button>
+										)}
 								</div>
 								<p>{auction.description}</p>
 								<div className="card bg-light mb-3">
 									<div className="card-body">
 										<h5 className="card-title">Auction Details</h5>
-										<p className="mb-1">Starting Price: ${auction.startingPrice}</p>
+										<p className="mb-1">
+											Starting Price: ${auction.startingPrice}
+										</p>
 										<p className="mb-1">Current Bid: ${auction.currentBid}</p>
 										<p className="mb-1">
 											Ends: {new Date(auction.endTime).toLocaleString()}
@@ -230,31 +301,48 @@ function AuctionDetails() {
 												<span className="badge bg-success">Active</span>
 											)}
 										</p>
+										{isEnded && (
+											<div className="mt-3">
+												<strong>Winner:</strong>{" "}
+												{auction.lastBidBy?.name ? (
+													<span>
+														{auction.lastBidBy.name}{" "}
+														{auction.lastBidBy.email
+															? `(${auction.lastBidBy.email})`
+															: ""}
+													</span>
+												) : (
+													<em>No winner tracked</em>
+												)}
+											</div>
+										)}
 									</div>
 								</div>
 							</>
 						)}
 
-						{!isEnded && auth?.user && auth.user.id !== auction.createdBy._id && (
-							<form onSubmit={handleBid} className="mt-4">
-								<div className="input-group">
-									<span className="input-group-text">$</span>
-									<input
-										type="number"
-										className="form-control"
-										value={bidAmount}
-										onChange={(e) => setBidAmount(e.target.value)}
-										min={minBid}
-										step="0.01"
-										placeholder={`Min bid: $${minBid}`}
-										required
-									/>
-									<button type="submit" className="btn btn-primary">
-										Place Bid
-									</button>
-								</div>
-							</form>
-						)}
+						{!isEnded &&
+							auth?.user &&
+							auth.user.id !== auction.createdBy._id && (
+								<form onSubmit={handleBid} className="mt-4">
+									<div className="input-group">
+										<span className="input-group-text">$</span>
+										<input
+											type="number"
+											className="form-control"
+											value={bidAmount}
+											onChange={(e) => setBidAmount(e.target.value)}
+											min={minBid}
+											step="0.01"
+											placeholder={`Min bid: $${minBid}`}
+											required
+										/>
+										<button type="submit" className="btn btn-primary">
+											Place Bid
+										</button>
+									</div>
+								</form>
+							)}
 
 						{!auth?.user && !isEnded && (
 							<div className="alert alert-info mt-3">

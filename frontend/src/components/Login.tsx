@@ -39,34 +39,36 @@ function Login() {
 	};
 
 	return (
-		<div className="container mt-5" style={{ maxWidth: 400 }}>
-			<h3 className="text-center mb-4">Login</h3>
-			<form onSubmit={handleLogin}>
-				<div className="mb-3">
-					<input
-						type="email"
-						placeholder="Email"
-						className="form-control"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						required
-					/>
-				</div>
-				<div className="mb-3">
-					<input
-						type="password"
-						placeholder="Password"
-						className="form-control"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						required
-					/>
-				</div>
-				<button className="btn btn-success w-100" type="submit">
-					Login
-				</button>
-			</form>
-		</div>
+		<main className="app-container">
+			<div className="content-card" style={{ maxWidth: 400 }}>
+				<h3 className="text-center mb-4">Login</h3>
+				<form onSubmit={handleLogin}>
+					<div className="mb-3">
+						<input
+							type="email"
+							placeholder="Email"
+							className="form-control"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							required
+						/>
+					</div>
+					<div className="mb-3">
+						<input
+							type="password"
+							placeholder="Password"
+							className="form-control"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							required
+						/>
+					</div>
+					<button className="btn btn-success w-100" type="submit">
+						Login
+					</button>
+				</form>
+			</div>
+		</main>
 	);
 }
 

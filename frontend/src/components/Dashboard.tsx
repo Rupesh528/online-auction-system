@@ -100,7 +100,7 @@ function Dashboard() {
 						</h3>
 						<button
 							className="btn btn-primary"
-							onClick={() => window.location.href = '/create-auction'}
+							onClick={() => (window.location.href = "/create-auction")}
 						>
 							<i className="bi bi-plus-lg me-2"></i>Create New Auction
 						</button>
@@ -109,7 +109,9 @@ function Dashboard() {
 						<div className="text-center p-5 bg-light rounded">
 							<i className="bi bi-inbox display-4 text-muted"></i>
 							<p className="lead mt-3">You haven't created any auctions yet.</p>
-							<p className="text-muted">Start by creating your first auction!</p>
+							<p className="text-muted">
+								Start by creating your first auction!
+							</p>
 						</div>
 					) : (
 						<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
