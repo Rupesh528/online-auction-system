@@ -9,19 +9,35 @@
 	--nav-text: #212529;
 	--link-color: #0d6efd;
 	--hover-bg: #e9ecef;
+	--content-bg: #ffffff;
+	--content-text: #2d3748;
+	--card-border: rgba(226, 232, 240, 0.9);
+	--card-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+	--btn-primary-bg: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+	--btn-primary-text: #ffffff;
+	--app-bg-gradient-start: #f6f8fa;
+	--app-bg-gradient-end: #e9ecef;
 }
 
 /* Dark Theme */
 .dark-theme {
 	--bg-primary: #212529;
 	--bg-secondary: #343a40;
-	--text-primary: #f8f9fa;
-	--text-secondary: #adb5bd;
+	--text-primary: #ffffff;
+	--text-secondary: #e2e8f0;
 	--border-color: #495057;
 	--nav-bg: #343a40;
-	--nav-text: #f8f9fa;
-	--link-color: #6ea8fe;
+	--nav-text: #ffffff;
+	--link-color: #ffffff;
 	--hover-bg: #495057;
+	--content-bg: #2b2f33;
+	--content-text: #ffffff;
+	--card-border: rgba(73, 80, 87, 0.6);
+	--card-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+	--btn-primary-bg: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+	--btn-primary-text: #ffffff;
+	--app-bg-gradient-start: #1b1e21;
+	--app-bg-gradient-end: #26282b;
 }
 
 /* Apply theme variables */
@@ -29,6 +45,120 @@ body {
 	background-color: var(--bg-primary);
 	color: var(--text-primary);
 	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Global app container/background overrides */
+.app-container {
+	background: linear-gradient(
+		135deg,
+		var(--app-bg-gradient-start) 0%,
+		var(--app-bg-gradient-end) 100%
+	) !important;
+}
+
+/* Content card & card overrides to follow theme */
+.content-card,
+.card,
+.auction-card {
+	background: var(--content-bg) !important;
+	color: var(--content-text) !important;
+	border: 1px solid var(--card-border) !important;
+	box-shadow: var(--card-shadow) !important;
+}
+
+.auction-card .card-title,
+.content-card .card-title {
+	color: var(--text-primary) !important;
+}
+
+/* Bootstrap utility overrides */
+.bg-light,
+.bg-white {
+	background-color: var(--bg-secondary) !important;
+	color: var(--text-primary) !important;
+	border-color: var(--border-color) !important;
+}
+
+.text-dark {
+	color: var(--text-primary) !important;
+}
+
+.text-light {
+	color: var(--text-primary) !important;
+}
+
+/* Buttons */
+.btn-primary {
+	background: var(--btn-primary-bg) !important;
+	color: var(--btn-primary-text) !important;
+	border: none !important;
+}
+
+.btn-outline-primary {
+	color: var(--btn-primary-text) !important;
+	border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.btn-outline-light {
+	color: var(--nav-text) !important;
+	border-color: var(--border-color) !important;
+}
+
+/* Forms */
+.form-control,
+input,
+textarea,
+select {
+	background-color: var(--bg-secondary) !important;
+	color: var(--text-primary) !important;
+	border: 1px solid var(--border-color) !important;
+}
+
+.form-control:focus,
+input:focus,
+textarea:focus {
+	box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12) !important;
+	border-color: var(--link-color) !important;
+}
+
+/* Nav and footer */
+.app-navbar {
+	background: var(--nav-bg) !important;
+	color: var(--nav-text) !important;
+}
+
+.app-navbar .navbar-brand,
+.app-navbar .nav-link,
+.app-navbar .btn {
+	color: var(--nav-text) !important;
+}
+
+.app-footer {
+	background: linear-gradient(
+		180deg,
+		var(--app-bg-gradient-end) 0%,
+		var(--app-bg-gradient-start) 100%
+	) !important;
+	color: var(--text-secondary) !important;
+	border-top: 1px solid var(--border-color) !important;
+}
+
+/* Tables, lists */
+.table,
+.table thead th,
+.list-group-item {
+	background: var(--content-bg) !important;
+	color: var(--content-text) !important;
+	border-color: var(--card-border) !important;
+}
+
+/* Dropdowns, modals */
+.dropdown-menu,
+.modal-content,
+.popover {
+	background: var(--content-bg) !important;
+	color: var(--content-text) !important;
+	border: 1px solid var(--card-border) !important;
 }
 
 .navbar {
@@ -65,4 +195,38 @@ body {
 
 .theme-toggle i {
 	font-size: 1.2rem;
+}
+
+/* Dark theme text overrides */
+.dark-theme .text-muted,
+.dark-theme .text-secondary {
+	color: #e2e8f0 !important;
+}
+
+.dark-theme .card-title,
+.dark-theme .display-4,
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6 {
+	color: #ffffff !important;
+}
+
+.dark-theme .lead {
+	color: #e2e8f0 !important;
+}
+
+.dark-theme .btn-outline-light {
+	border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.dark-theme .btn-outline-light:hover {
+	background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-theme .auction-card .card-text,
+.dark-theme .content-card .card-text {
+	color: #e2e8f0 !important;
 }

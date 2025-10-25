@@ -14,6 +14,7 @@ import Winners from "./pages/Winners";
 import Footer from "./components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import "./styles/theme.css";
 
 function App() {
 	return (
