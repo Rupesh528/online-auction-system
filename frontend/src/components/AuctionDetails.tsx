@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import API_BASE_URL from "../config/api";
 
 interface Auction {
 	_id: string;
@@ -54,9 +55,7 @@ function AuctionDetails() {
 	useEffect(() => {
 		const fetchAuction = async () => {
 			try {
-				const response = await axios.get(
-					`http://localhost:5000/api/auctions/${id}`
-				);
+				const response = await axios.get(`${API_BASE_URL}/api/auctions/${id}`);
 				setAuction(response.data);
 				setEditedFields({
 					title: response.data.title,
@@ -83,7 +82,7 @@ function AuctionDetails() {
 
 		try {
 			const response = await axios.post(
-				`http://localhost:5000/api/auctions/${id}/bid`,
+				`${API_BASE_URL}/api/auctions/${id}/bid`,
 				{ amount: Number(bidAmount) },
 				{
 					headers: {
@@ -105,7 +104,7 @@ function AuctionDetails() {
 
 		try {
 			const response = await axios.put(
-				`http://localhost:5000/api/auctions/${id}`,
+				`${API_BASE_URL}/api/auctions/${id}`,
 				editedFields,
 				{
 					headers: {

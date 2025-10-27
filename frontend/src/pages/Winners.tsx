@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config/api";
 
 interface Auction {
 	_id: string;
@@ -33,7 +34,7 @@ function Winners() {
 	useEffect(() => {
 		const fetchEnded = async () => {
 			try {
-				const res = await axios.get("http://localhost:5000/api/auctions");
+				const res = await axios.get(`${API_BASE_URL}/api/auctions`);
 				const data: Auction[] = res.data;
 				const now = new Date();
 				const ended = data.filter((a) => new Date(a.endTime) <= now);

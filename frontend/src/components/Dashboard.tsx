@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import AuctionCard from "./AuctionCard";
+import API_BASE_URL from "../config/api";
 
 interface Auction {
 	_id: string;
@@ -29,7 +30,7 @@ function Dashboard() {
 			if (!auth?.user?.token) return;
 
 			try {
-				const response = await axios.get("http://localhost:5000/api/auctions", {
+				const response = await axios.get(`${API_BASE_URL}/api/auctions`, {
 					headers: {
 						Authorization: `Bearer ${auth.user.token}`,
 					},

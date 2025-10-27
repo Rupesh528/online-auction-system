@@ -4,6 +4,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../context/AuthContext";
+import API_BASE_URL from "../config/api";
 
 function CreateAuction() {
 	const [title, setTitle] = useState("");
@@ -27,7 +28,7 @@ function CreateAuction() {
 
 		try {
 			await axios.post(
-				"http://localhost:5000/api/auctions",
+				`${API_BASE_URL}/api/auctions`,
 				{
 					title,
 					description,

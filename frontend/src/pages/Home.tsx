@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import AuctionCard from "../components/AuctionCard";
+import API_BASE_URL from "../config/api";
 
 interface Auction {
 	_id: string;
@@ -25,7 +26,7 @@ function Home() {
 	useEffect(() => {
 		const fetchFeaturedAuctions = async () => {
 			try {
-				const response = await axios.get("http://localhost:5000/api/auctions");
+				const response = await axios.get(`${API_BASE_URL}/api/auctions`);
 				const activeAuctions = response.data.filter(
 					(auction: Auction) => new Date(auction.endTime) > new Date()
 				);
