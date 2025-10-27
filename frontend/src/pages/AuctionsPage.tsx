@@ -11,6 +11,10 @@ interface Auction {
 	currentBid: number;
 	imageUrl?: string;
 	endTime: string;
+	createdBy: {
+		_id: string;
+		name: string;
+	};
 }
 
 function AuctionsPage() {
