@@ -1,4 +1,14 @@
 /* App layout helpers */
+.app-layout {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.main-content {
+	flex: 1;
+}
+
 .app-container {
 	flex: 1 0 auto;
 	display: flex;
@@ -316,25 +326,9 @@
 }
 
 /* Footer styles */
-.app-footer {
-	background: linear-gradient(
-		180deg,
-		var(--footer-bg-gradient-start) 0%,
-		var(--footer-bg-gradient-end) 100%
-	);
-	color: var(--footer-text);
-	border-top: 1px solid var(--border-color);
-	flex-shrink: 0;
-}
-
 .app-footer .container {
 	max-width: 1200px;
 	margin: 0 auto;
-}
-
-.app-footer p {
-	margin: 0;
-	font-size: 0.95rem;
 }
 
 .footer-text {
@@ -344,7 +338,8 @@
 .footer-link {
 	color: var(--footer-link);
 	text-decoration: none;
-	font-weight: 600;
+	font-weight: 500;
+	transition: color 0.3s ease;
 }
 
 .footer-link:hover {

@@ -31,9 +31,9 @@ function Register() {
 				email,
 				password,
 			});
-			alert("Registration successful! Please login.");
 			navigate("/login");
-		} catch (err) {
+		} catch (error) {
+			console.error("Registration error:", error);
 			alert("Error registering user.");
 		}
 	};
@@ -41,47 +41,74 @@ function Register() {
 	return (
 		<main className="app-container">
 			<div className="content-card" style={{ maxWidth: 400 }}>
-				<h3 className="text-center mb-4">Register</h3>
+				<div className="text-center mb-4">
+					<h1 className="h3 mb-3 fw-bold">Create Account</h1>
+					<p className="text-muted">Join our auction community today</p>
+				</div>
 				<form onSubmit={handleRegister}>
 					<div className="mb-3">
+						<label htmlFor="name" className="form-label fw-semibold">
+							<i className="bi bi-person me-2 text-primary"></i>
+							Full Name
+						</label>
 						<input
 							type="text"
-							placeholder="Name"
+							id="name"
 							className="form-control"
+							placeholder="Enter your full name"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 							required
 						/>
 					</div>
 					<div className="mb-3">
+						<label htmlFor="email" className="form-label fw-semibold">
+							<i className="bi bi-envelope me-2 text-primary"></i>
+							Email Address
+						</label>
 						<input
 							type="email"
-							placeholder="Email"
+							id="email"
 							className="form-control"
+							placeholder="Enter your email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
 						/>
 					</div>
-					<div className="mb-3">
+					<div className="mb-4">
+						<label htmlFor="password" className="form-label fw-semibold">
+							<i className="bi bi-lock me-2 text-primary"></i>
+							Password
+						</label>
 						<input
 							type="password"
-							placeholder="Password"
+							id="password"
 							className="form-control"
+							placeholder="Create a secure password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
 						/>
-						<small className="form-text text-muted mt-2 d-block">
-							Password must contain:
-							<ul className="mb-0 ps-3">
-								<li>At least 6 characters</li>
-							</ul>
+						<div className="form-text mt-2">
+							<small className="text-muted">
+								<i className="bi bi-info-circle me-1"></i>
+								Password must be at least 6 characters long
+							</small>
+						</div>
+					</div>
+					<button className="btn btn-primary btn-lg w-100 mb-3" type="submit">
+						<i className="bi bi-person-plus me-2"></i>
+						Create Account
+					</button>
+					<div className="text-center">
+						<small className="text-muted">
+							Already have an account?{" "}
+							<a href="/login" className="text-decoration-none fw-semibold">
+								Sign in here
+							</a>
 						</small>
 					</div>
-					<button className="btn btn-primary w-100" type="submit">
-						Register
-					</button>
 				</form>
 			</div>
 		</main>

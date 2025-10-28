@@ -7,6 +7,19 @@
 - [x] Test the application by running it locally and switching between light and dark modes to verify that text is readable and contrasts well against backgrounds.
 - [x] Fix footer contrast issues by adding footer-specific theme variables and updating footer styles to use them.
 - [x] Fixed contrast issue in "Browse Auctions" section by updating --text-muted color in light theme from #64748b to #374151, removing hover effect on btn-primary, and adjusting btn-outline-primary colors for better contrast in light mode.
+- [x] Added comprehensive analytics and statistics section to the dashboard displaying: Total Auctions Created, Active Auctions, Auctions Won, Total Value Won, Bids Placed, Ended Auctions, and Value Created.
+- [x] Enhanced the landing page (Home.tsx) with a modern hero section featuring gradient background, floating visual elements, platform statistics with custom stat cards, and improved featured auctions section with better responsive design.
+- [x] Fixed footer positioning issue on home page by adding proper flex layout structure to ensure footer stays at bottom.
+- [x] Fixed contrast issues in Create Auction, Login, and Register pages by updating text-muted color in dark theme to #cbd5e0 for better readability.
+- [x] Fixed placeholder text color in form inputs to use --text-secondary for proper contrast in dark mode.
+- [x] Added "Meet Developers" link beside the portfolio link in the footer.
+- [x] Fixed contrast issue in Auctions page by changing bg-light to bg-secondary for the empty state container.
+- [x] Fixed form-text color in dark mode to use #cbd5e0 for better contrast.
+- [x] Updated form help text in Create Auction page to be more descriptive and actionable.
+- [x] Made form-text elements smaller (0.875rem) for better visual hierarchy.
+- [x] Improved Auctions page UI with more engaging copy, better icons, shadows, and visual enhancements.
+- [x] Changed placeholder image background in AuctionCard to a gradient for better visual appeal in dark mode.
+- [x] Updated empty state background in AuctionsPage to use theme variable for better consistency.
 
 ## Notes
 

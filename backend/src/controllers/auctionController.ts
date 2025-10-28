@@ -212,3 +212,114 @@ export const placeBid = async (req: AuthRequest, res: Response) => {
 		res.status(500).json({ message: error.message || "Failed to place bid" });
 	}
 };
+
+export const getGlobalStats = async (_req: Request, res: Response) => {
+	try {
+		// Get total auctions
+		const totalAuctions = await AuctionItem.countDocuments();
+
+		// Get active auctions (not ended)
+		const activeAuctions = await AuctionItem.countDocuments({
+			endTime: { $gt: new Date() },
+		});
+
+		// Get total users (from auctions created)
+		const totalUsers = await AuctionItem.distinct("createdBy").then(
+			(users) => users.length
+		);
+
+		// Get total bids placed
+		const totalBids = await AuctionItem.aggregate([
+			{ $unwind: "$bids" },
+			{ $count: "totalBids" },
+		]).then((result) => (result.length > 0 ? result[0].totalBids : 0));
+
+		// Get total value of all auctions
+		const totalValue = await AuctionItem.aggregate([
+			{ $group: { _id: null, total: { $sum: "$currentBid" } } },
+		]).then((result) => (result.length > 0 ? result[0].total : 0));
+
+		const stats = {
+			totalAuctions,
+			activeAuctions,
+			totalUsers,
+			totalBids,
+			totalValue,
+		};
+
+		res.json(stats);
+	} catch (err) {
+		const error = err as Error;
+		res
+			.status(500)
+			.json({ message: error.message || "Failed to fetch global stats" });
+	}
+};
+
+export const getUserStats = async (req: AuthRequest, res: Response) => {
+	try {
+		if (!req.user?.id) {
+			return res.status(401).json({ message: "Unauthorized" });
+		}
+
+		const userId = req.user.id;
+
+		// Get all auctions created by user
+		const userAuctions = await AuctionItem.find({ createdBy: userId });
+
+		// Calculate statistics
+		const totalAuctions = userAuctions.length;
+		const activeAuctions = userAuctions.filter(
+			(auction) => new Date(auction.endTime) > new Date()
+		).length;
+		const endedAuctions = totalAuctions - activeAuctions;
+
+		// Calculate total value of auctions created (sum of current bids)
+		const totalValueCreated = userAuctions.reduce(
+			(sum, auction) => sum + auction.currentBid,
+			0
+		);
+
+		// Get auctions where user has placed bids (not their own)
+		const auctionsWithUserBids = await AuctionItem.find({
+			"bids.user": userId,
+			createdBy: { $ne: userId },
+		});
+
+		const totalBidsPlaced = auctionsWithUserBids.reduce(
+			(sum, auction) =>
+				sum +
+				auction.bids.filter((bid) => bid.user.toString() === userId).length,
+			0
+		);
+
+		// Get auctions won by user (ended auctions where user is lastBidBy)
+		const wonAuctions = await AuctionItem.find({
+			lastBidBy: userId,
+			endTime: { $lt: new Date() },
+		});
+
+		const totalAuctionsWon = wonAuctions.length;
+		const totalValueWon = wonAuctions.reduce(
+			(sum, auction) => sum + auction.currentBid,
+			0
+		);
+
+		const stats = {
+			totalAuctions,
+			activeAuctions,
+			endedAuctions,
+			totalValueCreated,
+			totalBidsPlaced,
+			totalAuctionsWon,
+			totalValueWon,
+		};
+
+		res.json(stats);
+	} catch (err) {
+		const error = err as Error;
+		res
+			.status(500)
+			.json({ message: error.message || "Failed to fetch user stats" });
+	}
+};

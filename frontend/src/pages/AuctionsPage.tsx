@@ -51,37 +51,92 @@ function AuctionsPage() {
 	return (
 		<main className="app-container">
 			<div className="content-card">
-				<div className="d-flex justify-content-between align-items-center mb-4">
-					<h2>Auctions</h2>
-					<Link to="/create-auction" className="btn btn-primary">
-						Create Auction
+				{/* Header Section */}
+				<div className="text-center mb-5">
+					<h1 className="display-4 mb-3">Discover Amazing Auctions</h1>
+					<p className="lead text-muted">
+						Explore unique items from passionate sellers. Place strategic bids
+						and secure incredible deals on one-of-a-kind treasures!
+					</p>
+				</div>
+
+				{/* Action Bar */}
+				<div className="d-flex justify-content-between align-items-center mb-5">
+					<div className="d-flex align-items-center gap-3">
+						<span className="badge bg-success fs-6 px-3 py-2 shadow-sm">
+							<i className="bi bi-play-circle-fill me-1"></i>
+							{activeAuctions.length} Live Auctions
+						</span>
+						<span className="badge bg-secondary fs-6 px-3 py-2 shadow-sm">
+							<i className="bi bi-stop-circle-fill me-1"></i>
+							{endedAuctions.length} Completed
+						</span>
+					</div>
+					<Link
+						to="/create-auction"
+						className="btn btn-primary btn-lg shadow-sm"
+					>
+						<i className="bi bi-plus-circle-fill me-2"></i>
+						List Your Item
 					</Link>
 				</div>
 
-				<h3>Active Auctions</h3>
-				{activeAuctions.length === 0 ? (
-					<p>No active auctions found.</p>
-				) : (
-					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
-						{activeAuctions.map((auction) => (
-							<div key={auction._id} className="col">
-								<AuctionCard auction={auction} />
-							</div>
-						))}
+				{/* Active Auctions Section */}
+				<section className="mb-5">
+					<div className="d-flex align-items-center mb-4">
+						<h2 className="mb-0 me-3">
+							<i className="bi bi-lightning-charge-fill text-success me-2"></i>
+							Live Auctions
+						</h2>
+						<hr className="flex-grow-1 border-success opacity-50" />
 					</div>
-				)}
 
-				<h3>Ended Auctions</h3>
-				{endedAuctions.length === 0 ? (
-					<p>No ended auctions found.</p>
-				) : (
-					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-						{endedAuctions.map((auction) => (
-							<div key={auction._id} className="col">
-								<AuctionCard auction={auction} />
-							</div>
-						))}
-					</div>
+					{activeAuctions.length === 0 ? (
+						<div className="text-center p-5 empty-state-bg rounded-3 shadow-sm">
+							<i className="bi bi-search display-4 text-muted mb-3"></i>
+							<h4 className="text-muted mb-2">No Live Auctions Right Now</h4>
+							<p className="text-muted mb-4">
+								Be the first to start an exciting auction! List your unique item
+								and watch the bids roll in.
+							</p>
+							<Link
+								to="/create-auction"
+								className="btn btn-primary btn-lg shadow-sm"
+							>
+								<i className="bi bi-plus-circle-fill me-2"></i>
+								Start Your First Auction
+							</Link>
+						</div>
+					) : (
+						<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+							{activeAuctions.map((auction) => (
+								<div key={auction._id} className="col">
+									<AuctionCard auction={auction} />
+								</div>
+							))}
+						</div>
+					)}
+				</section>
+
+				{/* Ended Auctions Section */}
+				{endedAuctions.length > 0 && (
+					<section>
+						<div className="d-flex align-items-center mb-4">
+							<h2 className="mb-0 me-3">
+								<i className="bi bi-check-circle-fill text-secondary me-2"></i>
+								Recently Completed
+							</h2>
+							<hr className="flex-grow-1 border-secondary opacity-50" />
+						</div>
+
+						<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+							{endedAuctions.map((auction) => (
+								<div key={auction._id} className="col">
+									<AuctionCard auction={auction} />
+								</div>
+							))}
+						</div>
+					</section>
 				)}
 			</div>
 		</main>

@@ -48,6 +48,16 @@ function Navbar() {
 						)}
 					</ul>
 					<ul className="navbar-nav">
+						<li className="nav-item me-3">
+							<button className="theme-toggle" onClick={toggleTheme}>
+								<i
+									className={`bi ${
+										theme === "light" ? "bi-moon-fill" : "bi-sun-fill"
+									}`}
+								></i>
+								{theme === "light" ? "Dark" : "Light"} Mode
+							</button>
+						</li>
 						{auth?.user ? (
 							<>
 								<li className="nav-item me-3">
@@ -55,16 +65,6 @@ function Navbar() {
 										<i className="bi bi-person-circle me-1"></i>
 										My Dashboard
 									</Link>
-								</li>
-								<li className="nav-item me-3">
-									<button className="theme-toggle" onClick={toggleTheme}>
-										<i
-											className={`bi ${
-												theme === "light" ? "bi-moon-fill" : "bi-sun-fill"
-											}`}
-										></i>
-										{theme === "light" ? "Dark" : "Light"} Mode
-									</button>
 								</li>
 								<li className="nav-item">
 									<button

@@ -32,9 +32,9 @@ function Login() {
 				name: res.data.user.name,
 				email: res.data.user.email,
 			});
-			alert("Login successful!");
 			navigate("/");
-		} catch {
+		} catch (error) {
+			console.error("Login error:", error);
 			alert("Invalid email or password.");
 		}
 	};
@@ -42,31 +42,53 @@ function Login() {
 	return (
 		<main className="app-container">
 			<div className="content-card" style={{ maxWidth: 400 }}>
-				<h3 className="text-center mb-4">Login</h3>
+				<div className="text-center mb-4">
+					<h1 className="h3 mb-3 fw-bold">Welcome Back</h1>
+					<p className="text-muted">Sign in to your account to continue</p>
+				</div>
 				<form onSubmit={handleLogin}>
 					<div className="mb-3">
+						<label htmlFor="email" className="form-label fw-semibold">
+							<i className="bi bi-envelope me-2 text-primary"></i>
+							Email Address
+						</label>
 						<input
 							type="email"
-							placeholder="Email"
+							id="email"
 							className="form-control"
+							placeholder="Enter your email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
 						/>
 					</div>
-					<div className="mb-3">
+					<div className="mb-4">
+						<label htmlFor="password" className="form-label fw-semibold">
+							<i className="bi bi-lock me-2 text-primary"></i>
+							Password
+						</label>
 						<input
 							type="password"
-							placeholder="Password"
+							id="password"
 							className="form-control"
+							placeholder="Enter your password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
 						/>
 					</div>
-					<button className="btn btn-success w-100" type="submit">
-						Login
+					<button className="btn btn-primary btn-lg w-100 mb-3" type="submit">
+						<i className="bi bi-box-arrow-in-right me-2"></i>
+						Sign In
 					</button>
+					<div className="text-center">
+						<small className="text-muted">
+							Don't have an account?{" "}
+							<a href="/register" className="text-decoration-none fw-semibold">
+								Create one here
+							</a>
+						</small>
+					</div>
 				</form>
 			</div>
 		</main>
