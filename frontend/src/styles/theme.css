@@ -17,7 +17,7 @@
 	--btn-primary-text: #ffffff;
 	--app-bg-gradient-start: #f6f8fa;
 	--app-bg-gradient-end: #e9ecef;
-	--text-muted: #64748b;
+	--text-muted: #374151;
 	--footer-bg-gradient-start: #f8f9fa;
 	--footer-bg-gradient-end: #e9ecef;
 	--footer-text: #6c757d;
@@ -44,7 +44,7 @@
 	--btn-primary-text: #ffffff;
 	--app-bg-gradient-start: #1b1e21;
 	--app-bg-gradient-end: #26282b;
-	--text-muted: #adb5bd;
+	--text-muted: #cbd5e0;
 	--footer-bg-gradient-start: #1b1e21;
 	--footer-bg-gradient-end: #26282b;
 	--footer-text: #e2e8f0;
@@ -106,9 +106,13 @@ body {
 	border: none !important;
 }
 
+.btn-primary:hover {
+	background: var(--btn-primary-bg) !important;
+}
+
 .btn-outline-primary {
-	color: var(--btn-primary-text) !important;
-	border-color: rgba(255, 255, 255, 0.08) !important;
+	color: var(--link-color) !important;
+	border-color: var(--link-color) !important;
 }
 
 .btn-outline-light {

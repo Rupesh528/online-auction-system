@@ -6,7 +6,7 @@
 - [x] Review and adjust `frontend/src/styles/theme.css` if necessary to improve contrast ratios, such as enhancing --text-primary or --text-secondary values for better readability.
 - [x] Test the application by running it locally and switching between light and dark modes to verify that text is readable and contrasts well against backgrounds.
 - [x] Fix footer contrast issues by adding footer-specific theme variables and updating footer styles to use them.
-- [ ] If issues persist, make additional tweaks to theme variables or App.css overrides.
+- [x] Fixed contrast issue in "Browse Auctions" section by updating --text-muted color in light theme from #64748b to #374151, removing hover effect on btn-primary, and adjusting btn-outline-primary colors for better contrast in light mode.
 
 ## Notes
 
