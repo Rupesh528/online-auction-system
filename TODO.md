@@ -20,6 +20,7 @@
 - [x] Improved Auctions page UI with more engaging copy, better icons, shadows, and visual enhancements.
 - [x] Changed placeholder image background in AuctionCard to a gradient for better visual appeal in dark mode.
 - [x] Updated empty state background in AuctionsPage to use theme variable for better consistency.
+- [x] Fixed TypeScript error in auctionController.ts by adding optional chaining for bid.user property.
 
 ## Notes
 

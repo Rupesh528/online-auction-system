@@ -289,7 +289,7 @@ export const getUserStats = async (req: AuthRequest, res: Response) => {
 		const totalBidsPlaced = auctionsWithUserBids.reduce(
 			(sum, auction) =>
 				sum +
-				auction.bids.filter((bid) => bid.user.toString() === userId).length,
+				auction.bids.filter((bid) => bid.user?.toString() === userId).length,
 			0
 		);
 
