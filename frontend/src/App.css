@@ -5,30 +5,34 @@
 	align-items: flex-start;
 	justify-content: center;
 	padding: 2rem 1rem;
-	background: linear-gradient(135deg, #f6f8fa 0%, #e9ecef 100%);
-	color: #2d3748;
+	background: linear-gradient(
+		135deg,
+		var(--app-bg-gradient-start) 0%,
+		var(--app-bg-gradient-end) 100%
+	);
+	color: var(--text-primary);
 	width: 100%;
 }
 
 .content-card {
 	width: 100%;
 	max-width: 1200px;
-	background: #ffffff;
+	background: var(--content-bg);
 	border-radius: 16px;
 	padding: 2.5rem;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	box-shadow: var(--card-shadow);
 	animation: fadeIn 0.3s ease-in-out;
 }
 
 .content-card h1 {
-	color: #1a365d;
+	color: var(--text-primary);
 	font-size: 2.5rem;
 	font-weight: 700;
 	margin-bottom: 1rem;
 }
 
 .content-card .lead {
-	color: #4a5568;
+	color: var(--text-secondary);
 	font-size: 1.25rem;
 	margin-bottom: 2rem;
 }
@@ -120,31 +124,31 @@
 }
 
 .auction-card .card-title {
-	color: #1a365d;
+	color: var(--text-primary);
 	font-weight: 700;
 	font-size: 1.25rem;
 	margin-bottom: 0.5rem;
 }
 
 .auction-card .card-text {
-	color: #4a5568;
+	color: var(--text-secondary);
 	line-height: 1.6;
 }
 
 .auction-card .bid-info {
-	background: linear-gradient(to right, #f7fafc, #edf2f7);
+	background: var(--bg-secondary);
 	padding: 1.25rem;
 	border-radius: 0.75rem;
 	margin: 0.75rem 0;
-	border: 1px solid #e2e8f0;
+	border: 1px solid var(--border-color);
 }
 
 .auction-card .text-muted {
-	color: #718096 !important;
+	color: var(--text-muted) !important;
 }
 
 .auction-card .fs-5 {
-	color: #2d3748;
+	color: var(--text-primary);
 	font-weight: 700;
 }
 
@@ -182,8 +186,8 @@
 }
 
 .auction-card {
-	background: #ffffff;
-	border: 1px solid rgba(226, 232, 240, 0.8) !important;
+	background: var(--content-bg);
+	border: 1px solid var(--card-border) !important;
 	transition: all 0.3s ease;
 }
 
@@ -194,24 +198,24 @@
 
 /* Dashboard Styles */
 .display-4 {
-	color: #2d3748;
+	color: var(--text-primary);
 	font-weight: 700;
 	margin-bottom: 1rem;
 }
 
 .bg-light {
-	background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
-	border: 1px solid #e2e8f0;
+	background: var(--bg-secondary) !important;
+	border: 1px solid var(--border-color);
 }
 
 .text-muted {
-	color: #64748b !important;
+	color: var(--text-muted) !important;
 }
 
 .lead {
 	font-size: 1.15rem;
 	font-weight: 400;
-	color: #4a5568;
+	color: var(--text-secondary);
 }
 
 .bi {
@@ -313,9 +317,13 @@
 
 /* Footer styles */
 .app-footer {
-	background: linear-gradient(180deg, #0f1724 0%, #0b1220 100%);
-	color: #e6eef8;
-	border-top: 1px solid rgba(255, 255, 255, 0.04);
+	background: linear-gradient(
+		180deg,
+		var(--footer-bg-gradient-start) 0%,
+		var(--footer-bg-gradient-end) 100%
+	);
+	color: var(--footer-text);
+	border-top: 1px solid var(--border-color);
 	flex-shrink: 0;
 }
 
@@ -330,18 +338,18 @@
 }
 
 .footer-text {
-	color: #cbd5e1;
+	color: var(--footer-text);
 }
 
 .footer-link {
-	color: #9fe3ff;
+	color: var(--footer-link);
 	text-decoration: none;
 	font-weight: 600;
 }
 
 .footer-link:hover {
 	text-decoration: underline;
-	color: #ffffff;
+	color: var(--footer-link-hover);
 }
 
 /* Small polish: subtle global font smoothing */
